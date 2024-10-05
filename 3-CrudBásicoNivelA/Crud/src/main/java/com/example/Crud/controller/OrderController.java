@@ -20,10 +20,12 @@ public class OrderController {
     public Order createOrder(@RequestBody Order order){
         return orderService.createOrder(order);
     }
+
     @GetMapping("getAllOrders")
         public List<Order> getAllOrder(){
         return orderService.listAllOrders();
     }
+
     @GetMapping("/{id}")
     public Order getOrder(@PathVariable long id){
         return orderService.getOrderById(id);

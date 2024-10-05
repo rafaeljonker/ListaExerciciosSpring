@@ -27,19 +27,19 @@ public class OrderService {
         return optionalOrder.orElse(null);
     }
 
-    public Order updateOrder(Long id, Order orderDetails){
+    public Order updateOrder(Long id, Order orderDetails) {
 
         Order order = getOrderById(id);
-        if(order != null) {
+        if (order != null) {
             order.setName(orderDetails.getName());
             order.setQuantity(orderDetails.getQuantity());
             order.setPrice(orderDetails.getPrice());
             return orderRepository.save(order);
-        }
-        else{
+        } else {
             return null;
         }
     }
+
     public void deleteById(Long id){
         orderRepository.deleteById(id);
     }
