@@ -31,7 +31,8 @@ public class LoginController {
 
  @GetMapping("{id}")
     public ResponseEntity<User> getById(@PathVariable Long id){
-      return loginService.getById(id).map(user -> ResponseEntity.ok(user)).orElse(ResponseEntity.notFound().build());
+    // user -> ResponseEntity.ok(user) lambida
+      return loginService.getById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
  }
 
 }
