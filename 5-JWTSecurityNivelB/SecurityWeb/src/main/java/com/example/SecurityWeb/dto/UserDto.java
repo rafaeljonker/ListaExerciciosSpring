@@ -11,7 +11,6 @@ public class UserDto {
         this.password = password;
     }
 
-
     public @NotNull(message = "não pode ser nulo") String getUsername() {
         return username;
     }
