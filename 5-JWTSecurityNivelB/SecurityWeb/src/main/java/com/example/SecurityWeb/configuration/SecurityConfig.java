@@ -16,8 +16,8 @@ public class SecurityConfig {
      return http.cors(AbstractHttpConfigurer::disable)
               .csrf(AbstractHttpConfigurer::disable)
               .authorizeHttpRequests(req -> {
-                  req.requestMatchers(HttpMethod.POST, "auth").permitAll()
-                  .requestMatchers(HttpMethod.GET, "auth/teste").permitAll()
+                  req.requestMatchers(HttpMethod.POST, "auth/**").permitAll()
+                  .requestMatchers(HttpMethod.GET, "auth/**").permitAll()
                           .anyRequest().authenticated();
               })
 // TOKEN-401          .addFilterBefore()

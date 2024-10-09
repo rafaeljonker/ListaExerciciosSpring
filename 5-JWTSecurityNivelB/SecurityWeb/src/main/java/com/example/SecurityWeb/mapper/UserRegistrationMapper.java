@@ -3,7 +3,6 @@ package com.example.SecurityWeb.mapper;
 import com.example.SecurityWeb.dto.UserRegistrationDto;
 import com.example.SecurityWeb.model.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper

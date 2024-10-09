@@ -1,17 +1,21 @@
 package com.example.SecurityWeb.controller;
 
 
+import com.example.SecurityWeb.dto.UserLoginDto;
 import com.example.SecurityWeb.dto.UserRegistrationDto;
+import com.example.SecurityWeb.model.User;
 import com.example.SecurityWeb.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("auth")
-public class LoginController {
-    public LoginController(UserService userService) {
+public class AuthController {
+    public AuthController(UserService userService) {
         this.userService = userService;
     }
     UserService userService;
@@ -22,9 +26,14 @@ public ResponseEntity<String> registration(@Valid @RequestBody UserRegistrationD
     return new ResponseEntity<>("Usuario cadastrado com sucesso", HttpStatus.CREATED);
 }
 
-    @GetMapping("teste")
-    public String registrationa() {
-       // userService.registration(userRegistrationDto);
-        return "Vc esta logado";
+    @PostMapping("login")
+    public ResponseEntity<String> registrationa(@Valid @RequestBody UserLoginDto userLoginDto) {
+        userService.login(userLoginDto);
+        return new ResponseEntity<>("Logado com sucesso", HttpStatus.OK);
+    }
+
+    @GetMapping("getUser")
+    public List<User> getAllUsers(){
+    return userService.getAllUser();
     }
 }
