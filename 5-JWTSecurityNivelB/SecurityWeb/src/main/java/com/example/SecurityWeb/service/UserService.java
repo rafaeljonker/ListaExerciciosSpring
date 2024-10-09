@@ -18,12 +18,13 @@ import java.util.Optional;
 public class UserService {
 
 
-
+TokenService tokenService;
     UserRepository userRepository;
 @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, TokenService tokenService) {
         this.userRepository = userRepository;
-    }
+        this.tokenService = tokenService;
+}
 
     public void registration(UserRegistrationDto userRegistrationDto){
     UserRegistrationMapper userRegistrationMapper = UserRegistrationMapper.INSTANCE;
@@ -42,9 +43,9 @@ public List<User> getAllUser(){
         if(user.isPresent() && user.get().getPassword().equals(userLoginDto.getPassword())){
 
          //injetar um TokenService que gera um token e retorna um token dto.
-            return new ResponseEntity<>(TokenDto, HttpStatus.OK);
+            return new ResponseEntity<>(tokenService.createToken(userLoginDto.getUsername()), HttpStatus.OK);
         }
-        return null;
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
 

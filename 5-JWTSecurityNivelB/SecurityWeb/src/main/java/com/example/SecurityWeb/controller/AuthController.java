@@ -1,9 +1,9 @@
 package com.example.SecurityWeb.controller;
 
 
+import com.example.SecurityWeb.dto.TokenDto;
 import com.example.SecurityWeb.dto.UserLoginDto;
 import com.example.SecurityWeb.dto.UserRegistrationDto;
-import com.example.SecurityWeb.dto.tokenDto;
 import com.example.SecurityWeb.model.User;
 import com.example.SecurityWeb.service.UserService;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ public ResponseEntity<String> registration(@Valid @RequestBody UserRegistrationD
 }
 
     @PostMapping("login")
-    public ResponseEntity<tokenDto> login(@Valid @RequestBody UserLoginDto userLoginDto) {
+    public ResponseEntity<TokenDto> login(@Valid @RequestBody UserLoginDto userLoginDto) {
         return(userService.login(userLoginDto));
     }
 
