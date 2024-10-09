@@ -17,7 +17,7 @@ public class SecurityConfig {
               .csrf(AbstractHttpConfigurer::disable)
               .authorizeHttpRequests(req -> {
                   req.requestMatchers(HttpMethod.POST, "auth/**").permitAll()
-                  .requestMatchers(HttpMethod.GET, "auth/**").permitAll()
+                 /* remover depois */ .requestMatchers(HttpMethod.GET, "auth/**").permitAll()
                           .anyRequest().authenticated();
               })
 // TOKEN-401          .addFilterBefore()

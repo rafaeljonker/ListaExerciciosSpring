@@ -3,6 +3,7 @@ package com.example.SecurityWeb.controller;
 
 import com.example.SecurityWeb.dto.UserLoginDto;
 import com.example.SecurityWeb.dto.UserRegistrationDto;
+import com.example.SecurityWeb.dto.tokenDto;
 import com.example.SecurityWeb.model.User;
 import com.example.SecurityWeb.service.UserService;
 import jakarta.validation.Valid;
@@ -27,9 +28,8 @@ public ResponseEntity<String> registration(@Valid @RequestBody UserRegistrationD
 }
 
     @PostMapping("login")
-    public ResponseEntity<String> registrationa(@Valid @RequestBody UserLoginDto userLoginDto) {
-        userService.login(userLoginDto);
-        return new ResponseEntity<>("Logado com sucesso", HttpStatus.OK);
+    public ResponseEntity<tokenDto> login(@Valid @RequestBody UserLoginDto userLoginDto) {
+        return(userService.login(userLoginDto));
     }
 
     @GetMapping("getUser")
