@@ -26,10 +26,14 @@ TokenService tokenService;
         this.tokenService = tokenService;
 }
 
-    public void registration(UserRegistrationDto userRegistrationDto){
+    public ResponseEntity<String> registration(UserRegistrationDto userRegistrationDto){
+    if(userRepository.findByUsername(userRegistrationDto.getUsername()).isEmpty() && userRegistrationDto.getPassword().equals(userRegistrationDto.getRepeatPassword())){
     UserRegistrationMapper userRegistrationMapper = UserRegistrationMapper.INSTANCE;
     User user = userRegistrationMapper.userDtoToUser(userRegistrationDto);
     userRepository.save(user);
+    return new ResponseEntity<>("Cadastrado com sucesso", HttpStatus.CREATED);
+    }
+    return new ResponseEntity<>("Erro ao cadastrar usuario", HttpStatus.BAD_REQUEST);
 }
 
 
@@ -39,10 +43,8 @@ public List<User> getAllUser(){
 }
 
     public ResponseEntity<TokenDto> login(UserLoginDto userLoginDto){
-        Optional<User> user =   userRepository.findByUsername(userLoginDto.getUsername());
+        Optional<User> user = userRepository.findByUsername(userLoginDto.getUsername());
         if(user.isPresent() && user.get().getPassword().equals(userLoginDto.getPassword())){
-
-         //injetar um TokenService que gera um token e retorna um token dto.
             return new ResponseEntity<>(tokenService.createToken(userLoginDto.getUsername()), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

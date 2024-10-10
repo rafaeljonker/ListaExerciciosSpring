@@ -23,13 +23,12 @@ public class AuthController {
 
 @PostMapping("registration")
 public ResponseEntity<String> registration(@Valid @RequestBody UserRegistrationDto userRegistrationDto) {
-    userService.registration(userRegistrationDto);
-    return new ResponseEntity<>("Usuario cadastrado com sucesso", HttpStatus.CREATED);
+    return userService.registration(userRegistrationDto);
 }
 
     @PostMapping("login")
     public ResponseEntity<TokenDto> login(@Valid @RequestBody UserLoginDto userLoginDto) {
-        return(userService.login(userLoginDto));
+        return (userService.login(userLoginDto));
     }
 
     @GetMapping("getUser")

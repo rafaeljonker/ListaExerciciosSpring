@@ -1,25 +1,40 @@
 package com.example.SecurityWeb.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.example.SecurityWeb.dto.TokenDto;
-import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class TokenService {
-    @Value("${jwt.secret}")
-    String chaveSecreta;
-    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
+    private static final String secretKey = "4d$Fj9p@8Lk3Zz%2QrWs1Yv!7XnT5bAc";
+    private final long EXPIRATION_TIME =  60 * 60; // 1 hora
+    private static final String ISSUER = "jonker-api"; // Emissor do token
 
 
     public TokenDto createToken(String username){
-        Map<String,Object> claim = new HashMap();
-        claim.put("username",username);
-        String token = Jwts.builder().setClaims(claim).setSubject(username).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).compact();
+    Algorithm algorithm = Algorithm.HMAC256(secretKey);
+        String token = JWT.create().withIssuer(ISSUER).withIssuedAt(creationDate()).withExpiresAt(expirationDate()).withSubject(username).sign(algorithm);
         return new TokenDto(token);
+    }
+    
+
+    //VALIDAR O TOKEN E DE ALGUMA MANEIRA INTERCEPTAR A REQUISIÇÂO
+    public void validateToken(String token){}
+
+    private Instant creationDate(){
+        return ZonedDateTime.now(ZoneId.of("America/Fortaleza")).toInstant();
+    }
+
+    private Instant expirationDate(){
+        return Instant.now().plusSeconds(EXPIRATION_TIME);
     }
 }
