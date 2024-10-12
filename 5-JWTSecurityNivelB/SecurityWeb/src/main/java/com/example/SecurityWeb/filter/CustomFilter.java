@@ -1,8 +1,7 @@
-package Filter;
+package com.example.SecurityWeb.filter;
 
 import com.example.SecurityWeb.service.TokenService;
 import jakarta.servlet.*;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;

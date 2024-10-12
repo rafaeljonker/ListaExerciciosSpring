@@ -1,6 +1,7 @@
 package com.example.SecurityWeb.configuration;
 
-import Filter.CustomFilter;
+
+import com.example.SecurityWeb.filter.CustomFilter;
 import com.example.SecurityWeb.service.TokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    TokenService tokenService;
+
+    SecurityConfig(TokenService tokenService){
+        this.tokenService = tokenService;
+    }
+
     @Bean
   public SecurityFilterChain configuration(HttpSecurity http, TokenService tokenService) throws Exception {
      return http.cors(AbstractHttpConfigurer::disable)
@@ -23,14 +30,12 @@ public class SecurityConfig {
                  /* remover depois */ .requestMatchers(HttpMethod.GET, "auth/**").permitAll()
                           .anyRequest().authenticated();
 
-              }) .addFilterBefore(new CustomFilter(tokenService(), UsernamePasswordAuthenticationFilter.class))
+              }) .addFilterBefore(new CustomFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
 // TOKEN-401
              .build();
   }
 
-    private TokenService tokenService() {
-        return new TokenService();
-    }
+
 
 
 }
