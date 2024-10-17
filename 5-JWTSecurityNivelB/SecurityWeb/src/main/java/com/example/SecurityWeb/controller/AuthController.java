@@ -1,38 +1,31 @@
 package com.example.SecurityWeb.controller;
 
 
-import com.example.SecurityWeb.dto.TokenDto;
-import com.example.SecurityWeb.dto.UserLoginDto;
-import com.example.SecurityWeb.dto.UserRegistrationDto;
-import com.example.SecurityWeb.model.User;
-import com.example.SecurityWeb.service.UserService;
+import com.example.SecurityWeb.domain.user.AuthenticationDto;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth/public")
 public class AuthController {
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
-    UserService userService;
 
-@PostMapping("registration")
-public ResponseEntity<String> registration(@Valid @RequestBody UserRegistrationDto userRegistrationDto) {
-    return userService.registration(userRegistrationDto);
-}
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    @PostMapping("login")
-    public ResponseEntity<TokenDto> login(@Valid @RequestBody UserLoginDto userLoginDto) {
-        return (userService.login(userLoginDto));
-    }
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDto data){
+        var userNamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        var auth =
+     }
 
-    @GetMapping("getUser")
-    public List<User> getAllUsers(){
-    return userService.getAllUser();
+    @GetMapping("teste")
+    public String teste(){
+        return  "teste";
     }
 }
